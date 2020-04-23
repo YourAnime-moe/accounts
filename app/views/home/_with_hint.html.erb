@@ -1,12 +1,11 @@
-<p class="subtitle">Please enter your password to login</p>
+<p class="subtitle">Now, please enter your password to login.</p>
 <div class="box">
-  <figure class="avatar is-128x128">
-    <img src="https://www.misete.io/logo.png">
-  </figure>
+  <%= avatar_tag(user: account, size: 128) %>
   <form>
     <div class="field">
       <div class="control">
-        <div class="level">
+        <p class="title is-size-5 has-text-centered"><%= account.name %></p>
+        <div class="level login">
           <div class="level-left">
             <%= account.email %>
           </div>
@@ -14,16 +13,74 @@
             <%= link_to('Change', change_email_path, method: :post) %>
           </div>
         </div>
-        <input class="input is-large" type="password" placeholder="Your Password">
-        <span class="help has-text-danger">Your password is invalid. Please try again.</span>
+        <input id="password" class="input is-large" type="password" placeholder="Your Password" autofocus>
+        <span id="not-found" class="help has-text-danger is-hidden">Your password is invalid. Please try again.</span>
+        <span id="plz-wait" class="help has-text-warning">Getting ready just for you...</span>
       </div>
     </div>
-    <div class="field">
+    <div class="field is-hidden">
       <label class="checkbox">
         <input type="checkbox">
         Remember me
       </label>
     </div>
-    <button id="login" class="button is-block is-info is-large is-fullwidth">Login</button>
+    <button id="login" disabled class="button is-block is-info is-large is-fullwidth">Login</button>
   </form>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const loginBtn = document.getElementById('login');
+    const passwordField = document.getElementById('password');
+    const notFound = document.getElementById('not-found');
+    const plzWait = document.getElementById('plz-wait');
+
+    ready();
+
+    loginBtn.addEventListener('click', () => {
+      const formData = new FormData();
+      formData.append('sessions[password]', passwordField.value);
+      hideNotFound();
+      disableBtn();
+
+      let url = `<%= login_path %>`;
+      fetch(url, {method: 'post', body: formData, headers: {'X-CSRF-Token': csrfToken()}})
+        .then(res => {
+          res.json().then(result => {
+            if (result.success && result.redirect_to) {
+              window.location.replace(result.redirect_to);
+            } else {
+              showNotFound();
+            }
+          });
+        });
+    });
+
+    function ready() {
+      plzWait.classList.add('is-hidden');
+      enableBtn();
+    }
+
+    function disableBtn() {
+      loginBtn.setAttribute('disabled', 'disabled');
+    }
+
+    function enableBtn() {
+      loginBtn.removeAttribute('disabled');
+    }
+
+    function setLoading() {
+      disableBtn();
+    }
+
+    function showNotFound() {
+      notFound.classList.remove('is-hidden');
+      enableBtn();
+    }
+
+    function hideNotFound() {
+      notFound.classList.add('is-hidden');
+      enableBtn();
+    }
+  });
+</script>

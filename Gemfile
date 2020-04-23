@@ -23,6 +23,8 @@ gem 'jbuilder', '~> 2.7'
 gem 'bcrypt', '~> 3.1.7'
 # Bulma
 gem "bulma-rails", "~> 0.8.0"
+# ApplicationOperation
+gem 'active_operation'
 
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'

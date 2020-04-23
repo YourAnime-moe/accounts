@@ -85,6 +85,9 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    active_operation (0.2.0)
+      activesupport (> 4.0)
+      smart_properties (~> 1.0)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     bcrypt (3.1.13)
@@ -180,6 +183,7 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    smart_properties (1.15.0)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -222,6 +226,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_operation
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.2)
   bulma-rails (~> 0.8.0)

@@ -38,7 +38,6 @@ module AuthenticationHelper
     return if logged_in?
     raise('This user is invalid') unless user.valid?
 
-    ensure_active!
     user.sessions.create!(expires_on: session_expiry)
     session[:auth_token] = user.auth_token
     Rails.logger.info "User #{user.name} is now logged in"
@@ -47,6 +46,7 @@ module AuthenticationHelper
   def log_out
     current_user&.delete_auth_token!
     clean_session
+    delete_email_hint
   end
 
   private

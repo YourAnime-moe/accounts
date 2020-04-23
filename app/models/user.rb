@@ -12,6 +12,9 @@ class User < ApplicationRecord
   validates :email, format: URI::MailTo::EMAIL_REGEXP, uniqueness: { case_sensitive: false }, if: :email?
   validates :color_hex, uniqueness: { scope: :uuid, case_sensitive: true }
 
+  has_one_attached :avatar
+  has_one_attached :banner
+
   def as_json(*)
     {
       id: id,

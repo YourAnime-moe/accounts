@@ -1,0 +1,13 @@
+<section class="hero is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Coming soon!
+      </h1>
+      <h2 class="subtitle">
+        Hey there, <%= current_user.name %>! Stay tuned for more updates in the near future.
+      </h2>
+      You can also <%= link_to('Logout', logout_path, method: :delete) %>.
+    </div>
+  </div>
+</section>

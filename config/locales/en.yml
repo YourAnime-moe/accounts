@@ -1,3 +1,21 @@
 en:
   app:
     title: "Misete.io Accounts"
+
+  welcome:
+    title: "Continue to Misete.io"
+    catch-phrase: "Please enter your email address to proceed."
+    login:
+      username: "Your username"
+      email: "Your email address"
+      password: "Your password"
+      login: "Login"
+      next: "Next"
+      errors:
+        wrong-password: "We are sorry %{user}, but your password is incorrect."
+        unknown-user: "We are sorry, but no user with username \"%{attempt}\" exists in our system."
+        no-username: "Please enter your username."
+        no-password: "Please enter your password."
+        no-credentials: "Please enter your username and password."
+        deactivated: "Your account has been deactivated because it has been reported to the moderators."
+        maintenance: "We are sorry but our servers are current in maintenance. Please try again later."
