@@ -1,0 +1,22 @@
+<section class="hero is-fullheight">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <div class="column is-4 is-offset-4">
+        <h3 class="title">Login</h3>
+        <hr class="login-hr">
+        
+        <% if account_from_email_hint.present? %>
+          <%= render partial: 'home/with_hint', locals: { account: account_from_email_hint } %>
+        <% else %>
+          <%= render 'home/without_hint' %>
+        <% end %>
+
+        <p class="has-text-grey is-hidden">
+          <a href="../">Sign Up</a> &nbsp;·&nbsp;
+          <a href="../">Forgot Password</a> &nbsp;·&nbsp;
+          <a href="../">Need Help?</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

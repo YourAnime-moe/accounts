@@ -12,7 +12,7 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :password_digest
 
       t.string :color_hex, null: false, default: '000000'
-      t.string :type, null: false
+      t.string :type
 
       t.boolean :active, null: false, default: false
       t.boolean :blocked, null: false, default: false

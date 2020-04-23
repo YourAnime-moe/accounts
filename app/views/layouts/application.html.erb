@@ -1,15 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MiseteAccounts</title>
+    <title><%= app_title %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/bulma-prefers-dark" />
   </head>
 
   <body>
     <%= yield %>
   </body>
+
+  <script>
+    function csrfToken() {
+      return document.querySelector('[name="csrf-token"]').getAttribute('content');
+    }
+
+    function handleErrors(response) {
+      if (!response.ok) {
+        throw response.json();
+      }
+      return response.json();
+    }
+  </script>
 </html>

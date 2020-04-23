@@ -1,18 +1,16 @@
 class User < ApplicationRecord
-  EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
-
   before_validation :ensure_uuid
   before_validation :ensure_color_hex
 
   has_secure_password
 
   with_options presence: true do
-    validates :uuid, uniqueness: true
+    validates :uuid, uniqueness: { case_sensitive: true }
     validates :email
   end
 
-  validates :email, format: EMAIL_REGEX, uniqueness: true, if: :email?
-  validates :color_hex, uniqueness: { scope: :uuid }
+  validates :email, format: URI::MailTo::EMAIL_REGEXP, uniqueness: { case_sensitive: false }, if: :email?
+  validates :color_hex, uniqueness: { scope: :uuid, case_sensitive: true }
 
   def as_json(*)
     {
@@ -51,6 +49,26 @@ class User < ApplicationRecord
 
   def delete_all_auth_token!
     active_sessions.each { |session| session.delete! }
+  end
+
+  def type
+    return self[:type] if self[:type].present?
+
+    'User'
+  end
+
+  def valid_user?
+    false
+  end
+
+  def self.make(type, *args, **kwargs)
+    type = type.constantize if type.is_a?(String)
+    raise ArgumentError, "Expected User-like type, got: #{type.class}" unless type < User
+
+    result = type.new(*args, **kwargs)
+    raise ArgumentError, "Expected valid user type, got: #{type.class}" unless result.valid_user?
+
+    result
   end
 
   private

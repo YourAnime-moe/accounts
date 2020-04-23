@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_22_021854) do
+ActiveRecord::Schema.define(version: 2020_04_23_025501) do
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "uuid", null: false
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2020_04_22_021854) do
     t.string "password"
     t.string "password_digest"
     t.string "color_hex", default: "000000", null: false
-    t.string "type", null: false
+    t.string "type"
     t.boolean "active", default: false, null: false
     t.boolean "blocked", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
@@ -30,6 +30,21 @@ ActiveRecord::Schema.define(version: 2020_04_22_021854) do
     t.index ["username"], name: "index_users_on_username", unique: true
     t.index ["uuid", "color_hex"], name: "index_users_on_uuid_and_color_hex", unique: true
     t.index ["uuid"], name: "index_users_on_uuid", unique: true
+  end
+
+  create_table "users_sessions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "user_type", null: false
+    t.string "token", null: false
+    t.string "rotation_token"
+    t.boolean "is_not_deleted", default: true, null: false
+    t.datetime "deleted_on"
+    t.datetime "expires_on", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["is_not_deleted", "token"], name: "index_users_sessions_on_is_not_deleted_and_token"
+    t.index ["token"], name: "index_users_sessions_on_token", unique: true
+    t.index ["user_id", "token"], name: "index_users_sessions_on_user_id_and_token"
   end
 
 end
