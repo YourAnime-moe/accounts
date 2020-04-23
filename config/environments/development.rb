@@ -63,3 +63,7 @@ end
 Rails.application.configure do
   config.hosts << "misete-accounts.myshopify.io"
 end
+
+Rails.application.configure do
+  config.web_console.whitelisted_ips = "192.168.64.0/24"
+end

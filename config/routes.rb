@@ -1,3 +1,7 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  root 'home#index'
+  post '/lookup' => 'home#lookup'
+  post '/login' => 'sessions#create'
+  delete '/logout' => 'sessions#delete'
+  post '/change_email' => 'home#remove_email_hint'
 end
