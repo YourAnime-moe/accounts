@@ -11,8 +11,8 @@ module ApplicationHelper
   end
 
   def avatar_tag(size: 200, user: nil, **options)
-
     user ||= current_user
+
     content_tag :figure, class: 'avatar' do
       if user.avatar.attached?
         image_tag(user.avatar.variant(resize_to_limit: [size, size]), **options)
