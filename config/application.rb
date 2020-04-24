@@ -11,6 +11,8 @@ module MiseteAccounts
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
+    config.email_regex = URI::MailTo::EMAIL_REGEXP
+
     config.x.naka_host = ENV.fetch('NAKA_HOST') { 'http://localhost:3000' }
   end
 end

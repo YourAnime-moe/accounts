@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def show_flash_notification(type, content)
+    content_tag(:div, content, class: "notification is-#{type}")
+  end
+
   def app_title
     @app_title
   end
@@ -19,6 +23,14 @@ module ApplicationHelper
       else
         url = "https://api.adorable.io/avatars/#{size}/#{user.username}.png"
         image_tag(url, alt: user.name, size: size, **options)
+      end
+    end
+  end
+
+  def field_control(&block)
+    content_tag :div, class: 'field' do
+      content_tag :div, class: 'control' do
+        yield block
       end
     end
   end
