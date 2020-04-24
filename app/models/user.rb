@@ -5,11 +5,13 @@ class User < ApplicationRecord
   has_secure_password
 
   with_options presence: true do
-    validates :uuid, uniqueness: { case_sensitive: true }
+    with_options uniqueness: { case_sensitive: true } do
+      validates :uuid
+      validates :username
+    end
     validates :email
   end
-
-  validates :email, format: URI::MailTo::EMAIL_REGEXP, uniqueness: { case_sensitive: false }, if: :email?
+  validates :email, format: Rails.configuration.email_regex, uniqueness: { case_sensitive: false }, if: :email?
   validates :color_hex, uniqueness: { scope: :uuid, case_sensitive: true }
 
   has_one_attached :avatar

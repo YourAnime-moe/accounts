@@ -49,6 +49,13 @@ module AuthenticationHelper
     delete_email_hint
   end
 
+  def authenticated!
+    current_user.sessions.create(expires_on: 1.week.from_now) if logged_in? && current_user.auth_token.nil?
+    return if logged_in?
+
+    redirect_to_current_path_in_mind
+  end
+
   private
 
   def check_and_set_auth_token(current_auth_token)
@@ -66,5 +73,10 @@ module AuthenticationHelper
 
   def clean_session
     session.delete(:auth_token)
+  end
+
+  def redirect_to_current_path_in_mind
+    next_url = NextLinkFinder.perform(path: request.fullpath)
+    redirect_to "/login?next=#{CGI.escape(next_url)}"
   end
 end
