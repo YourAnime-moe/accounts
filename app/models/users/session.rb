@@ -24,6 +24,17 @@ module Users
       user
     end
 
+    def application
+      Connext::Application.find_by(uuid: app_id)
+    end
+
+    def correct_application?(connext_application)
+      valid_app = connext_application.persisted? && connext_application.valid?
+      return false unless valid_app
+
+      ActiveSupport::SecurityUtils.secure_compare(connext_application.uuid, app_id)
+    end
+
     def expires?
       expires_on.present?
     end

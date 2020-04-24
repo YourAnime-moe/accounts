@@ -13,6 +13,7 @@ module MiseteAccounts
 
     config.email_regex = URI::MailTo::EMAIL_REGEXP
 
-    config.x.naka_host = ENV.fetch('NAKA_HOST') { 'http://localhost:3000' }
+    config.x.hosts[:naka] = ENV.fetch('NAKA_HOST') { 'http://localhost:3000' }
+    config.x.hosts[:naka_redirect_uri] = ENV.fetch('NAKA_REDIRECT_URI') { 'http://localhost:3000' }
   end
 end
