@@ -68,3 +68,33 @@ p.subtitle {
 .level.login {
   padding: 0 .5rem;
 }
+
+.input, .textarea {
+  background-color: #3F3F3Fa0 !important;
+}
+
+.textarea::placeholder, .input::placeholder { /* Firefox, Chrome, Opera */
+  color: #b2b2b2 !important;
+}
+
+.textarea::-ms-input-placeholder, .input::-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #b2b2b2 !important;
+}
+
+.textarea::-ms-input-placeholder, .input::-ms-input-placeholder { /* Microsoft Edge */
+  color: #b2b2b2 !important;
+}
+
+.textarea::hover, .input:hover {
+  background-color: #3F3F3Fc0 !important;
+  transition: 0.3s;
+}
+
+.textarea::focus, .input:focus {
+  background-color: #3F3F3F !important;
+}
+
+.no-outline:focus, .no-outline:active {
+  outline: none !important;
+  box-shadow: none !important;
+}

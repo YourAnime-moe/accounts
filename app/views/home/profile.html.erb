@@ -1,13 +1,50 @@
 <section class="hero is-fullheight">
   <div class="hero-body">
-    <div class="container">
-      <h1 class="title">
-        Coming soon!
-      </h1>
-      <h2 class="subtitle">
-        Hey there, <%= current_user.name %>! Stay tuned for more updates in the near future.
-      </h2>
-      You can also <%= link_to('Logout', logout_path, method: :delete) %>.
+    <div class="container has-text-centered">
+      <%= avatar_tag(size: 300) %>
+      <h1 class="title is-size-3">Welcome back, <%= current_user.name %></h1>
+      <h1 class="is-size-5 has-text-grey-light">Manage your account details here. You are in control.</h1>
+
+      <div class="action-cards">
+        <div class="columns">
+          <div class="column is-6">
+            <%= render partial: 'home/action_card', locals: {
+              title: 'Share and view your Nintendo Switch clips',
+              description: 'Want to show off some skills or simply see what other people are made of? Check out Misete.io!',
+              link_text: 'Go to Misete.io',
+              link_path: Rails.configuration.x.naka_host,
+              new_tab: true,
+            } %>
+          </div>
+          <div class="column is-6">
+            <%= render partial: 'home/action_card', locals: {
+              title: 'Your account',
+              description: 'You have control over which information you wish to expose. You can also keep track of all authorized applications.',
+              link_text: 'Account details',
+              link_path: '/me',
+            } %>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column is-6">
+            <%= render partial: 'home/action_card', locals: {
+              title: 'Manage your sessions',
+              description: 'Manage all sessions that are active or expired. Control how you want your sessions to work.',
+              link_text: 'My sessions',
+              link_path: '/me/sessions',
+            } %>
+          </div>
+          <div class="column is-6">
+            <%= render partial: 'home/action_card', locals: {
+              title: 'Logout',
+              description: 'This will end all active sessions on Misete.io. This means that all accounts will be disconnected on this computer.',
+              link_text: 'Logout',
+              link_path: logout_path,
+              link_method: :delete,
+            } %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
