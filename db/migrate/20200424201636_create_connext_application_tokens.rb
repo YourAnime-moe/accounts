@@ -2,7 +2,6 @@ class CreateConnextApplicationTokens < ActiveRecord::Migration[6.1]
   def change
     create_table :connext_application_tokens do |t|
       t.bigint :application_id, null: false
-      t.string :token, null: false
       t.string :refresh_token, null: false
       t.datetime :expires_in
       t.datetime :revoked_at

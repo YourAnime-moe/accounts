@@ -66,6 +66,14 @@ class User < ApplicationRecord
     false
   end
 
+  def profile_url
+    if avatar.attached?
+      avatar.variant(resize_to_limit: [300, 300]).service_url
+    else
+      "https://api.adorable.io/avatars/300/#{username}.png"
+    end
+  end
+
   def self.make(type, *args, **kwargs)
     type = type.constantize if type.is_a?(String)
     raise ArgumentError, "Expected User-like type, got: #{type.class}" unless type < User

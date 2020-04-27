@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'home#index'
   post '/lookup' => 'home#lookup'
   post '/login' => 'sessions#create'
+  get '/logout/:app_id' => 'sessions#delete_for_app'
   delete '/logout' => 'sessions#delete'
   post '/change_email' => 'home#remove_email_hint'
 

@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  before_action :redirect_back_to_app, only: :index
+
   def index
     if logged_in?
       set_title(before: 'Your Profile')
@@ -21,6 +23,6 @@ class HomeController < ApplicationController
 
   def remove_email_hint
     delete_email_hint
-    redirect_to(root_path)
+    redirect_to(root_path(app_id: params[:app_id]))
   end
 end

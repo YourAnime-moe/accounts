@@ -32,7 +32,7 @@ module Users
       valid_app = connext_application.persisted? && connext_application.valid?
       return false unless valid_app
 
-      ActiveSupport::SecurityUtils.secure_compare(connext_application.uuid, app_id)
+      app_id.nil? || ActiveSupport::SecurityUtils.secure_compare(connext_application.uuid, app_id)
     end
 
     def expires?
@@ -41,6 +41,10 @@ module Users
 
     def expired?
       (expires_on.presence && expires_on <= Time.now.utc) || !is_not_deleted?
+    end
+
+    def active?
+      !expired?
     end
 
     def delete!

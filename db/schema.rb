@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_201636) do
 
   create_table "users_sessions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.string "app_id", null: false
+    t.string "app_id"
     t.string "user_type", null: false
     t.string "token", null: false
     t.string "rotation_token"
