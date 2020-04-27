@@ -7,7 +7,6 @@ class CreateConnextApplicationTokens < ActiveRecord::Migration[6.1]
       t.datetime :revoked_at
       t.string :scopes
 
-      t.index :token, unique: true
       t.index :refresh_token, unique: true
 
       t.timestamps
