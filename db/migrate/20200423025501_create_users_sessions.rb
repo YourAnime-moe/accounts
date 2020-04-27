@@ -2,6 +2,7 @@ class CreateUsersSessions < ActiveRecord::Migration[6.1]
   def change
     create_table :users_sessions do |t|
       t.integer :user_id, null: false
+      t.string :app_id
       t.string :user_type, null: false
       t.string :token, null: false
       t.string :rotation_token

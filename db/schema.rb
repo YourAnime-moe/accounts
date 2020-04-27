@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_23_224536) do
+ActiveRecord::Schema.define(version: 2020_04_24_201636) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -40,6 +40,29 @@ ActiveRecord::Schema.define(version: 2020_04_23_224536) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "connext_application_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "application_id", null: false
+    t.string "token", null: false
+    t.string "refresh_token", null: false
+    t.datetime "expires_in"
+    t.datetime "revoked_at"
+    t.string "scopes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["refresh_token"], name: "index_connext_application_tokens_on_refresh_token", unique: true
+    t.index ["token"], name: "index_connext_application_tokens_on_token", unique: true
+  end
+
+  create_table "connext_applications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "uuid", null: false
+    t.string "secret", null: false
+    t.string "redirect_uri", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["uuid"], name: "index_connext_applications_on_uuid", unique: true
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "uuid", null: false
     t.string "email", null: false
@@ -62,6 +85,7 @@ ActiveRecord::Schema.define(version: 2020_04_23_224536) do
 
   create_table "users_sessions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "user_id", null: false
+    t.string "app_id"
     t.string "user_type", null: false
     t.string "token", null: false
     t.string "rotation_token"

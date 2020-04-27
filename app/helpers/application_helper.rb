@@ -34,4 +34,8 @@ module ApplicationHelper
       end
     end
   end
+
+  def current_application
+    @current_application ||= Connext::Application.find_by(uuid: params[:app_id])
+  end
 end

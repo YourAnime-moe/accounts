@@ -10,7 +10,7 @@
             <%= account.email %>
           </div>
           <div class="level-right">
-            <%= link_to('Change', change_email_path, method: :post) %>
+            <%= link_to('Change', change_email_path(app_id: current_application&.uuid), method: :post) %>
           </div>
         </div>
         <input id="password" class="input is-large no-outline" type="password" placeholder="Your Password" autofocus>
@@ -40,6 +40,7 @@
     loginBtn.addEventListener('click', () => {
       const formData = new FormData();
       formData.append('sessions[password]', passwordField.value);
+      formData.append('app_id', '<%= params[:app_id] %>');
       hideNotFound();
       disableBtn();
 

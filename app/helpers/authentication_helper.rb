@@ -34,17 +34,21 @@ module AuthenticationHelper
     current_user.present? && current_user.active?
   end
 
-  def log_in(user, session_expiry: 1.week.from_now)
+  def log_in(user, app_id=nil, session_expiry: 1.week.from_now)
     return if logged_in?
     raise('This user is invalid') unless user.valid?
 
-    user.sessions.create!(expires_on: session_expiry)
+    user.sessions.create!(expires_on: session_expiry, app_id: app_id)
     session[:auth_token] = user.auth_token
     Rails.logger.info "User #{user.name} is now logged in"
   end
 
+  def log_in_with_app(user, application, session_expiry: 1.week.from_now)
+    log_in(user, application.uuid, session_expiry: session_expiry)
+  end
+
   def log_out
-    current_user&.delete_auth_token!
+    current_user&.delete_all_auth_token!
     clean_session
     delete_email_hint
   end

@@ -6,11 +6,23 @@ class SessionsController < ApplicationController
       username: account_from_email_hint.email,
       password: login_params[:password].strip,
     )
-    log_in(user)
-
+    go_to = if current_application.present?
+      log_in_with_app(user, current_application)
+      token = current_application.tokens.create!(
+        token: SecureRandom.hex(32),
+        refresh_token: SecureRandom.hex(32),
+        expires_in: 1.week.from_now,
+      )
+      Pathname.new(current_application.redirect_uri).join(
+        "auth?refresh_token=#{token.refresh_token}&user_id=#{user.uuid}"
+      ).to_s
+    else
+      log_in(user)
+      redirect_to_url
+    end
     respond_to do |format|
       format.json do
-        render json: { success: current_user.present?, redirect_to: redirect_to_url }, status: 200
+        render json: { success: current_user.present?, redirect_to: go_to }, status: 200
       end
     end
   rescue Users::Authenticate::Error => e
@@ -22,6 +34,13 @@ class SessionsController < ApplicationController
     log_out
 
     redirect_to root_path
+  end
+
+  def delete_for_app
+    Users::Session.active.where(app_id: current_application.uuid).each do |session|
+      session.delete!
+    end
+    redirect_to current_application.redirect_uri
   end
 
   private

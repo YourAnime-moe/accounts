@@ -30,12 +30,12 @@
       hideNotFound();
       disableBtn();
 
-      let url = `<%= lookup_path %>`;
+      let url = `<%= lookup_path(app_id: current_application&.uuid) %>`;
       fetch(url, {method: 'post', body: formData, headers: {'X-CSRF-Token': csrfToken()}})
         .then(res => {
           res.json().then(result => {
             if (result.found) {
-              window.location.href = '/'
+              window.location.href = '/?app_id=<%= current_application&.uuid %>'
             } else {
               showNotFound();
             }
