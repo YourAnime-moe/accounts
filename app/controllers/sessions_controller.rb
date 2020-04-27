@@ -9,7 +9,6 @@ class SessionsController < ApplicationController
     go_to = if current_application.present?
       log_in_with_app(user, current_application)
       token = current_application.tokens.create!(
-        token: SecureRandom.hex(32),
         refresh_token: SecureRandom.hex(32),
         expires_in: 1.week.from_now,
       )
