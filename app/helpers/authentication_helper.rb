@@ -31,7 +31,7 @@ module AuthenticationHelper
   end
 
   def logged_in?
-    current_user.present? && current_user.active?
+    current_user.present?
   end
 
   def log_in(user, app_id=nil, session_expiry: 1.week.from_now)
@@ -43,8 +43,16 @@ module AuthenticationHelper
     Rails.logger.info "User #{user.name} is now logged in"
   end
 
-  def log_in_with_app(user, application, session_expiry: 1.week.from_now)
+  def log_in_with_app_then_redirect(user, application, session_expiry: 1.week.from_now)
     log_in(user, application.uuid, session_expiry: session_expiry)
+
+    token = application.tokens.create!(
+      refresh_token: SecureRandom.hex(32),
+      expires_in: 1.week.from_now,
+    )
+    Pathname.new(application.redirect_uri).join(
+      "auth?refresh_token=#{token.refresh_token}&user_id=#{user.uuid}"
+    ).to_s
   end
 
   def log_out
@@ -81,6 +89,6 @@ module AuthenticationHelper
 
   def redirect_to_current_path_in_mind
     next_url = NextLinkFinder.perform(path: request.fullpath)
-    redirect_to "/login?next=#{CGI.escape(next_url)}"
+    redirect_to(root_path(next: CGI.escape(next_url)))
   end
 end

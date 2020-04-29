@@ -1,5 +1,5 @@
 module ApplicationHelper
-  def show_flash_notification(type, content)
+  def show_notification(type, content)
     content_tag(:div, content, class: "notification is-#{type}")
   end
 
@@ -32,6 +32,14 @@ module ApplicationHelper
       content_tag :div, class: 'control' do
         yield block
       end
+    end
+  end
+
+  def inactive_notification
+    return unless logged_in?
+
+    unless current_user.active?
+      show_notification(:danger, 'Attention: your account is not active yet.')
     end
   end
 

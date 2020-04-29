@@ -7,18 +7,12 @@ class SessionsController < ApplicationController
       password: login_params[:password].strip,
     )
     go_to = if current_application.present?
-      log_in_with_app(user, current_application)
-      token = current_application.tokens.create!(
-        refresh_token: SecureRandom.hex(32),
-        expires_in: 1.week.from_now,
-      )
-      Pathname.new(current_application.redirect_uri).join(
-        "auth?refresh_token=#{token.refresh_token}&user_id=#{user.uuid}"
-      ).to_s
+      log_in_with_app_then_redirect(user, current_application)
     else
       log_in(user)
       redirect_to_url
     end
+
     respond_to do |format|
       format.json do
         render json: { success: current_user.present?, redirect_to: go_to }, status: 200

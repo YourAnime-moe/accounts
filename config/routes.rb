@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'home#index'
   post '/lookup' => 'home#lookup'
+  get '/signup' => 'accounts#new'
+  post '/signup' => 'accounts#create'
   post '/login' => 'sessions#create'
   get '/logout/:app_id' => 'sessions#delete_for_app'
   delete '/logout' => 'sessions#delete'
