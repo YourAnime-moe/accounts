@@ -1,22 +1,6 @@
-class AccountsController < ApplicationController
+class AccountsController < AuthenticatedController
   def index
     set_title(before: 'Account details')
-  end
-
-  def new
-    @user = RegularUser.new(active: false, blocked: false)
-  end
-
-  def create
-    @user = RegularUser.new(signup_params)
-    if @user.valid?
-      @user.save!
-      set_email_hint(@user.email)
-      flash[:notice] = 'Welcome. Your account has been created!'
-    else
-      flash[:danger] = "Uh oh... #{@user.errors_string}"
-    end
-    redirect_to(root_path)
   end
 
   def update
@@ -38,15 +22,5 @@ class AccountsController < ApplicationController
       :first_name,
       :last_name,
     ).to_h.symbolize_keys
-  end
-
-  def signup_params
-    params.require(:user).permit(
-      :username,
-      :email,
-      :first_name,
-      :last_name,
-      :password,
-    )
   end
 end

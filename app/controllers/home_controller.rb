@@ -23,6 +23,6 @@ class HomeController < ApplicationController
 
   def remove_email_hint
     delete_email_hint
-    redirect_to(root_path(app_id: params[:app_id]))
+    redirect_to(root_path(app_id: current_application&.uuid))
   end
 end
