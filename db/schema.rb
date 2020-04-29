@@ -42,7 +42,6 @@ ActiveRecord::Schema.define(version: 2020_04_24_201636) do
 
   create_table "connext_application_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "application_id", null: false
-    t.string "token", null: false
     t.string "refresh_token", null: false
     t.datetime "expires_in"
     t.datetime "revoked_at"
@@ -50,7 +49,6 @@ ActiveRecord::Schema.define(version: 2020_04_24_201636) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["refresh_token"], name: "index_connext_application_tokens_on_refresh_token", unique: true
-    t.index ["token"], name: "index_connext_application_tokens_on_token", unique: true
   end
 
   create_table "connext_applications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

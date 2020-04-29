@@ -4,6 +4,11 @@
     <img src="https://www.misete.io/logo.png">
   </figure>
   <form onsubmit="return false;">
+    <div class="level login">
+      <div class="level-item has-text-centered">
+        <%= link_to('New to Misete.io Accounts?', signup_path(app_id: current_application&.uuid)) %>
+      </div>
+    </div>
     <div class="field">
       <div class="control">
         <input id="email" class="input is-large no-outline" type="email" placeholder="Your Email" autofocus autocomplete="off">

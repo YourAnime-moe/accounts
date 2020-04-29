@@ -13,7 +13,7 @@
 
   <body>
     <% flash.each do |key, value| %>
-      <%= show_flash_notification(key, value) %>
+      <%= show_notification(key, value) %>
     <% end %>
     <%= yield %>
   </body>

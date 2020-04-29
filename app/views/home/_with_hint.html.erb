@@ -7,7 +7,10 @@
         <p class="title is-size-5 has-text-centered"><%= account.name %></p>
         <div class="level login">
           <div class="level-left">
-            <%= account.email %>
+            <% unless account.active? %>
+              <i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i>
+            <% end %>
+            <span><%= account.email %></span>
           </div>
           <div class="level-right">
             <%= link_to('Change', change_email_path(app_id: current_application&.uuid), method: :post) %>
