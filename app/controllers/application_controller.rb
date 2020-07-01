@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   include AuthenticationHelper
 
+  after_action :allow_iframes
+
   def new_account
     @user = RegularUser.new(active: false, blocked: false)
   end
@@ -38,6 +40,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def allow_iframes
+    response.headers.except! 'X-Frame-Options'
+  end
 
   def signup_params
     params.require(:user).permit(
