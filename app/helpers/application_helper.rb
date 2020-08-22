@@ -46,4 +46,8 @@ module ApplicationHelper
   def current_application
     @current_application ||= Connext::Application.find_by(uuid: params[:app_id])
   end
+
+  def application_logo_path
+    Rails.configuration.x.hosts[:naka].join('logo.png').to_s
+  end
 end

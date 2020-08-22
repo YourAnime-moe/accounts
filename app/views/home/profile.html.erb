@@ -13,7 +13,7 @@
               title: 'Share and view your Nintendo Switch clips',
               description: 'Want to show off some skills or simply see what other people are made of? Check out Misete.io!',
               link_text: 'Go to Misete.io',
-              link_path: Rails.configuration.x.hosts[:naka],
+              link_path: Rails.configuration.x.hosts[:naka].to_s,
               new_tab: true,
             } %>
           </div>
