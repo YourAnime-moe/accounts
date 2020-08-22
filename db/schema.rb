@@ -12,7 +12,10 @@
 
 ActiveRecord::Schema.define(version: 2020_04_24_201636) do
 
-  create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
@@ -22,7 +25,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_201636) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "active_storage_blobs", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -34,13 +37,13 @@ ActiveRecord::Schema.define(version: 2020_04_24_201636) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "active_storage_variant_records", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "connext_application_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "connext_application_tokens", force: :cascade do |t|
     t.bigint "application_id", null: false
     t.string "refresh_token", null: false
     t.datetime "expires_in"
@@ -51,7 +54,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_201636) do
     t.index ["refresh_token"], name: "index_connext_application_tokens_on_refresh_token", unique: true
   end
 
-  create_table "connext_applications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "connext_applications", force: :cascade do |t|
     t.string "name", null: false
     t.string "uuid", null: false
     t.string "secret", null: false
@@ -61,7 +64,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_201636) do
     t.index ["uuid"], name: "index_connext_applications_on_uuid", unique: true
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "uuid", null: false
     t.string "email", null: false
     t.string "username", null: false
@@ -81,7 +84,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_201636) do
     t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end
 
-  create_table "users_sessions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "users_sessions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "app_id"
     t.string "user_type", null: false
