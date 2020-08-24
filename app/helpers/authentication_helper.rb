@@ -14,6 +14,10 @@ module AuthenticationHelper
     @account_from_email_hint = nil
   end
 
+  def current_resource_owner
+    User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+  end
+
   def current_user
     current_auth_token = session[:auth_token]
     return nil unless current_auth_token.present?
@@ -43,18 +47,6 @@ module AuthenticationHelper
     Rails.logger.info "User #{user.name} is now logged in"
   end
 
-  def log_in_with_app_then_redirect(user, application, session_expiry: 1.week.from_now)
-    log_in(user, application.uuid, session_expiry: session_expiry)
-
-    token = application.tokens.create!(
-      refresh_token: SecureRandom.hex(32),
-      expires_in: 1.week.from_now,
-    )
-    Pathname.new(application.redirect_uri).join(
-      "auth?refresh_token=#{token.refresh_token}&user_id=#{user.uuid}"
-    ).to_s
-  end
-
   def log_out
     current_user&.delete_all_auth_token!
     clean_session
@@ -62,6 +54,8 @@ module AuthenticationHelper
   end
 
   def authenticated!
+    return unless api_request?
+
     current_user.sessions.create(expires_on: 1.week.from_now) if logged_in? && current_user.auth_token.nil?
     return if logged_in?
 

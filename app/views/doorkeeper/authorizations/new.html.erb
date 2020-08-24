@@ -1,0 +1,63 @@
+<section class="hero is-fullheight">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <div class="column is-4 is-offset-4">
+        <h3 class="title"><%= t('.title') %></h3>
+        <%= link_to("Cancel this authorization request", oauth_cancel_path) %>
+        <div class="box">
+          <%= avatar_tag(user: current_user, size: 128) %>
+          <small>
+            <p style="margin: 10px; font-weight: 300">
+              <b><%= current_user.name %></b> (<%= current_user.email %>), by clicking "Authorize" below, you accept that:
+            </p>
+          </small>
+
+          <% if @pre_auth.scopes.count > 0 %>
+            <div id="oauth-permissions">
+              <%= t('.able_to') %>:</p>
+
+              <div class="container" style="padding: 20px">
+                <% @pre_auth.scopes.each do |scope| %>
+                  <span class="tag"><%= t scope, scope: [:doorkeeper, :scopes] %></span>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+          
+          <div class="columns">
+            <div class="column is-6 is-desktop">
+              <%= form_tag oauth_authorization_path, method: :post do %>
+                <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
+                <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
+                <%= hidden_field_tag :state, @pre_auth.state %>
+                <%= hidden_field_tag :response_type, @pre_auth.response_type %>
+                <%= hidden_field_tag :scope, @pre_auth.scope %>
+                <%= hidden_field_tag :code_challenge, @pre_auth.code_challenge %>
+                <%= hidden_field_tag :code_challenge_method, @pre_auth.code_challenge_method %>
+                <%= submit_tag t('doorkeeper.authorizations.buttons.authorize'), class: "button is-success is-block is-fullwidth" %>
+              <% end %>
+            </div>
+            <div class="column is-6 is-desktop">
+              <%= form_tag oauth_authorization_path, method: :delete do %>
+                <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
+                <%= hidden_field_tag :redirect_uri, @pre_auth.redirect_uri %>
+                <%= hidden_field_tag :state, @pre_auth.state %>
+                <%= hidden_field_tag :response_type, @pre_auth.response_type %>
+                <%= hidden_field_tag :scope, @pre_auth.scope %>
+                <%= hidden_field_tag :code_challenge, @pre_auth.code_challenge %>
+                <%= hidden_field_tag :code_challenge_method, @pre_auth.code_challenge_method %>
+                <%= submit_tag t('doorkeeper.authorizations.buttons.deny'), class: "button is-danger is-block is-fullwidth" %>
+              <% end %>
+            </div>
+          </div>
+
+
+          <div class="notification is-text-small" style="margin-top">
+            <small>You will redirected to: <br/><u><%= @pre_auth.redirect_uri %></u></small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

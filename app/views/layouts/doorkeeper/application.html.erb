@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= app_title %> ~ <%= t('doorkeeper.layouts.application.title') %></title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/bulma-prefers-dark" />
+  </head>
+
+  <body>
+    <% flash.each do |key, value| %>
+      <%= show_notification(key, value) %>
+    <% end %>
+    <%= yield %>
+  </body>
+
+  <script>
+    function csrfToken() {
+      return document.querySelector('[name="csrf-token"]').getAttribute('content');
+    }
+
+    function handleErrors(response) {
+      if (!response.ok) {
+        throw response.json();
+      }
+      return response.json();
+    }
+  </script>
+</html>
+

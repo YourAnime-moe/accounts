@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
 
   after_action :allow_iframes
 
+  before_action :redirect_to_oauth_flow_if_logged_in!
+
   def new_account
     @user = RegularUser.new(active: false, blocked: false)
   end
@@ -18,6 +20,12 @@ class ApplicationController < ActionController::Base
       flash[:danger] = "Uh oh... #{@user.errors_string}"
     end
     redirect_to(root_path(app_id: current_application&.uuid))
+  end
+
+  def cancel_oauth_request
+    session.delete(:redirect_to)
+
+    redirect_to(root_path)
   end
 
   protected
@@ -37,6 +45,17 @@ class ApplicationController < ActionController::Base
       "auth?refresh_token=#{token.refresh_token}&user_id=#{current_user.uuid}"
     ).to_s
     redirect_to(uri)
+  end
+
+  def redirect_to_oauth_flow_if_logged_in!
+    return unless logged_in?
+
+    if session[:redirect_to].present?
+      redirect_to_url = session[:redirect_to]
+      session.delete(:redirect_to)
+
+      redirect_to(redirect_to_url)
+    end
   end
 
   private

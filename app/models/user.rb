@@ -17,14 +17,29 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_one_attached :banner
 
+  has_many :access_grants,
+           class_name: 'Doorkeeper::AccessGrant',
+           foreign_key: :resource_owner_id,
+           dependent: :destroy
+
+  has_many :access_tokens,
+           class_name: 'Doorkeeper::AccessToken',
+           foreign_key: :resource_owner_id,
+           dependent: :destroy
+
   def as_json(*)
     {
       id: id,
+      uuid: uuid,
       first_name: first_name,
       last_name: last_name,
       name: name,
       username: username,
       email: email,
+      image: profile_url,
+      color_hex: color_hex,
+      active: active,
+      blocked: blocked,
     }
   end
 
@@ -63,6 +78,10 @@ class User < ApplicationRecord
   end
 
   def valid_user?
+    false
+  end
+
+  def admin?
     false
   end
 

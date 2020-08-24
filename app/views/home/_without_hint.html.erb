@@ -11,8 +11,8 @@
     </div>
     <div class="field">
       <div class="control">
-        <input id="email" class="input is-large no-outline" type="email" placeholder="Your Email" autofocus autocomplete="off">
-        <span id="not-found" class="help has-text-danger is-hidden">There are no accounts associated to that address.</span>
+        <input id="email" class="input is-large no-outline" type="email" placeholder="Your username or email" autofocus autocomplete="off">
+        <span id="not-found" class="help has-text-danger is-hidden">There are no accounts associated to that username or email address.</span>
         <span id="plz-wait" class="help has-text-warning">Getting ready just for you...</span>
       </div>
     </div>
@@ -35,12 +35,12 @@
       hideNotFound();
       disableBtn();
 
-      let url = `<%= lookup_path(app_id: current_application&.uuid) %>`;
+      let url = `<%= lookup_path(app_id: current_application&.uuid, next: params[:next]) %>`;
       fetch(url, {method: 'post', body: formData, headers: {'X-CSRF-Token': csrfToken()}})
         .then(res => {
           res.json().then(result => {
             if (result.found) {
-              window.location.href = '/?app_id=<%= current_application&.uuid %>'
+              window.location.href = result.redirect_url;
             } else {
               showNotFound();
             }

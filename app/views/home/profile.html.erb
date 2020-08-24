@@ -13,7 +13,7 @@
               title: 'Share and view your Nintendo Switch clips',
               description: 'Want to show off some skills or simply see what other people are made of? Check out Misete.io!',
               link_text: 'Go to Misete.io',
-              link_path: Rails.configuration.x.hosts[:naka].to_s,
+              link_path: Rails.configuration.x.hosts[:naka].join('auth/misete').to_s,
               new_tab: true,
             } %>
           </div>
@@ -45,6 +45,26 @@
             } %>
           </div>
         </div>
+        <% if current_user.admin? %>
+          <div class="columns">
+            <div class="column is-6">
+              <%= render partial: 'home/action_card', locals: {
+                title: 'OAuth Applications',
+                description: 'Manage all OAuth applications that are authorized to interact with Misete.io.',
+                link_text: 'View all applications',
+                link_path: oauth_applications_path,  
+              } %>
+            </div>
+            <div class="column is-6">
+              <%= render partial: 'home/action_card', locals: {
+                title: 'Authorized OAuth applications',
+                description: 'View all authorized OAuth applications.',
+                link_text: 'View authorized apps',
+                link_path: oauth_authorized_applications_path,
+              } %>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

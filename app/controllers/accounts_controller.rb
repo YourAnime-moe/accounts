@@ -1,6 +1,13 @@
-class AccountsController < AuthenticatedController
+class AccountsController < ApplicationController
+  before_action :doorkeeper_authorize!, if: :api_request?
+
   def index
-    set_title(before: 'Account details')
+    respond_to do |format|
+      format.html { set_title(before: 'Account details') }
+      format.json {
+        render json: current_resource_owner
+      }
+    end
   end
 
   def update
@@ -14,6 +21,11 @@ class AccountsController < AuthenticatedController
   end
 
   private
+
+  def api_request?
+    #byebug
+    request.format.json?
+  end
 
   def user_params
     params.require(:user).permit(
