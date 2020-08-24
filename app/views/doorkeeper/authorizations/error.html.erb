@@ -1,7 +1,36 @@
-<div class="border-bottom mb-4">
-  <h1><%= t('doorkeeper.authorizations.error.title') %></h1>
-</div>
+<section class="hero is-fullheight">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <div class="column is-4 is-offset-4">
+        <h3 class="title"><%= t('.title') %></h3>
+        <%= link_to("Cancel this authorization request", oauth_cancel_path) %>
+        <div class="box">
+          <%= avatar_tag(user: current_user, size: 128) %>
+          <p style="margin: 10px; font-weight: 300">
+            <b>Hey <%= current_user.name %></b>
+          </p>
 
-<main role="main">
-  <pre><%= @pre_auth.error_response.body[:error_description] %></pre>
-</main>
+          <% current_app = Doorkeeper::Application.find_by(uid: params[:client_id]) %>
+
+          <p>Something doesn't look quite right...</p><br/>
+          <small>
+            Try to go back to the application and log in again. If this doesn't
+            work, go to your <%= link_to('Home page', root_path) %> and log out from
+            there.
+            <% if current_app %>
+              Try also to log out from <%= link_to(current_app.name, domain_for_app(current_app)) %>.
+            <% end %>
+          </small>
+          
+          <div class="notification is-text-small" style="margin-top: 1rem">
+            <small>
+              Reason: <%= @pre_auth.error_response.body[:error_description] %>
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+

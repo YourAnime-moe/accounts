@@ -10,7 +10,7 @@
             <% unless account.active? %>
               <i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i>
             <% end %>
-            <span><%= account.email %></span>
+            <span><%= show_account_hint %></span>
           </div>
           <div class="level-right">
             <%= link_to('Change', change_email_path(app_id: current_application&.uuid), method: :post) %>

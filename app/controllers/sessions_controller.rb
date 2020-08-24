@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
       username: account_from_email_hint.email,
       password: login_params[:password].strip,
     )
-    log_in(user)
+    log_in(user, session_expiry: Rails.configuration.x.access_token_expires_in.from_now)
     next_path = params[:next].present? ? CGI.unescape(params[:next]) : root_path
 
     respond_to do |format|

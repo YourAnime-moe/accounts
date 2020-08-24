@@ -25,14 +25,14 @@ module Users
     end
 
     def application
-      Connext::Application.find_by(uuid: app_id)
+      Doorkeeper::Application.find_by(uid: app_id)
     end
 
     def correct_application?(connext_application)
       valid_app = connext_application.persisted? && connext_application.valid?
       return false unless valid_app
 
-      app_id.nil? || ActiveSupport::SecurityUtils.secure_compare(connext_application.uuid, app_id)
+      app_id.nil? || ActiveSupport::SecurityUtils.secure_compare(connext_application.uid, app_id)
     end
 
     def expires?

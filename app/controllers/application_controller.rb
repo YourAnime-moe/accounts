@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
     @user = RegularUser.new(signup_params)
     if @user.valid?
       @user.save!
-      set_email_hint(@user.email)
+      set_email_hint(@user.email, true)
       flash[:notice] = 'Welcome. Your account has been created!'
     else
       flash[:danger] = "Uh oh... #{@user.errors_string}"

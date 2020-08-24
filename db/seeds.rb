@@ -14,7 +14,7 @@ Connext::Application.create!(
 )
 
 Doorkeeper::Application.create!(
-  name: '[System] Misete.io',
+  name: 'Misete.io',
   uid: Rails.application.credentials.connext[:naka][:uuid],
   secret: Rails.application.credentials.connext[:naka][:secret],
   redirect_uri: Rails.configuration.x.hosts[:naka_redirect_uri] + '/auth/misete/callback',

@@ -15,5 +15,6 @@ module MiseteAccounts
 
     config.x.hosts[:naka] = Pathname.new(ENV.fetch('NAKA_HOST') { 'http://localhost:3000' })
     config.x.hosts[:naka_redirect_uri] = ENV.fetch('NAKA_REDIRECT_URI') { 'http://localhost:3000' }
+    config.x.access_token_expires_in = 2.hours
   end
 end

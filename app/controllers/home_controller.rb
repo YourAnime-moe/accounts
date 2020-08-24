@@ -15,8 +15,10 @@ class HomeController < ApplicationController
     user = if params[:email].present?
       Users::Lookup.perform(username_or_email: params[:email])
     end
+    uses_email = user.email == params[:email]
+
     redirect_url = if user.present?
-      set_email_hint(user.email)
+      set_email_hint(user.email, uses_email)
       root_path(next: params[:next])
     end
     render json: { found: user.present?, redirect_url: redirect_url }

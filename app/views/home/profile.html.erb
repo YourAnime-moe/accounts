@@ -1,7 +1,7 @@
 <section class="hero is-fullheight">
   <div class="hero-body">
-    <div class="container has-text-centered">
-      <%= avatar_tag(size: 300) %>
+    <div class="container restricted has-text-centered">
+      <%= avatar_tag(size: 300, no_margin_top: true) %>
       <h1 class="title is-size-3">Welcome back, <%= current_user.name %></h1>
       <%= inactive_notification %>
       <h1 class="is-size-5 has-text-grey-light">Manage your account details here. You are in control.</h1>
@@ -29,10 +29,10 @@
         <div class="columns">
           <div class="column is-6">
             <%= render partial: 'home/action_card', locals: {
-              title: 'Manage your sessions',
-              description: 'Manage all sessions that are active or expired. Control how you want your sessions to work.',
-              link_text: 'My sessions',
-              link_path: '/me/sessions',
+              title: 'Your sessions',
+              description: 'Your will be asked for your permission to use your account details upon logging in. See all sessions here.',
+              link_text: 'View authorized apps',
+              link_path: oauth_authorized_applications_path,
             } %>
           </div>
           <div class="column is-6">
@@ -53,14 +53,6 @@
                 description: 'Manage all OAuth applications that are authorized to interact with Misete.io.',
                 link_text: 'View all applications',
                 link_path: oauth_applications_path,  
-              } %>
-            </div>
-            <div class="column is-6">
-              <%= render partial: 'home/action_card', locals: {
-                title: 'Authorized OAuth applications',
-                description: 'View all authorized OAuth applications.',
-                link_text: 'View authorized apps',
-                link_path: oauth_authorized_applications_path,
               } %>
             </div>
           </div>

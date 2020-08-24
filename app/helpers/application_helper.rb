@@ -14,10 +14,17 @@ module ApplicationHelper
     @app_title
   end
 
-  def avatar_tag(size: 200, user: nil, **options)
+  def domain_for_app(application)
+    return unless application.redirect_uri.present?
+
+    regex = %r{([\w\:\/\\.]+)(\/auth\/misete\/callback)\/?}
+    application.redirect_uri.match(regex).captures[0]
+  end
+
+  def avatar_tag(size: 200, user: nil, no_margin_top: false, **options)
     user ||= current_user
 
-    content_tag :figure, class: 'avatar' do
+    content_tag :figure, class: "avatar #{'no-margin-top' if no_margin_top}" do
       if user.avatar.attached?
         image_tag(user.avatar.variant(resize_to_limit: [size, size]), **options)
       else

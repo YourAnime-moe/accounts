@@ -1,24 +1,50 @@
-<header class="page-header">
-  <h1><%= t('doorkeeper.authorized_applications.index.title') %></h1>
-</header>
+<section class="hero">
+  <div class="hero-body">
+    <div class="container restricted has-text-centered">
+      <%= avatar_tag(size: 300, no_margin_top: true) %>
+      <h1 class="title is-size-3"><%= current_user.name %>'s active sessions</h1>
 
-<main role="main">
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th><%= t('doorkeeper.authorized_applications.index.application') %></th>
-      <th><%= t('doorkeeper.authorized_applications.index.created_at') %></th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @applications.each do |application| %>
-      <tr>
-        <td><%= application.name %></td>
-        <td><%= application.created_at.strftime(t('doorkeeper.authorized_applications.index.date_format')) %></td>
-        <td><%= render 'delete_form', application: application %></td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
-</main>
+      <nav class="breadcrumb is-centered has-succeeds-separator" aria-label="breadcrumbs">
+        <ul>
+          <li><a href="/">Home page</a></li>
+          <li class="is-active"><a href="#" aria-current="page">My sessions</a></li>
+        </ul>
+      </nav>
+
+      <div style="padding: 2rem">
+        <small>
+          If you see an application below that you don't trust anymore or that was added by accident, you
+          can simply revoke them below.
+          <br/>
+          
+          <strong>Please note:</strong> all sessions last for 2 hours. So you won't be automatically
+          disconnected until your session actually expires. As long as you're logged in to Misete
+          Accounts, the session will be renewed for the authorized applications below.
+        </small>
+      </div>
+
+      <% unless @applications.blank? %>
+        <table class="table is-fullwidth is-striped is-hoverable">
+          <thead>
+            <th>Application name</th>
+            <th>When did you first login?</th>
+            <th>Action</th>
+          </thead>
+          <tbody>
+            <% @applications.each do |application| %>
+              <tr>
+                <td><%= application.name %></td>
+                <td title="<%= application.created_at.strftime(t('doorkeeper.authorized_applications.index.date_format')) %>">
+                  <%= time_ago_in_words(application.created_at) %> ago
+                </td>
+                <td><%= render 'delete_form', application: application %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+
+    </div>
+  </div>
+</section>
+
