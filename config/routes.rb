@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   post '/change_email' => 'home#remove_email_hint'
 
   get '/oauth/cancel' => 'application#cancel_oauth_request'
+  get '/login' => 'application#login'
+  get '/pick' => 'application#account_picker'
 
   scope :me do
     get '/', to: 'accounts#index', as: :my_account

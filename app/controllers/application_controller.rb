@@ -28,6 +28,26 @@ class ApplicationController < ActionController::Base
     redirect_to(root_path)
   end
 
+  def login
+    if logged_in? && params[:uno].present?
+      if requested_account == current_user
+        redirect_to(root_path)
+      else
+        @from_picker = true
+        render 'home/login'
+      end
+    elsif logged_in?
+      render 'account_picker'
+    elsif params[:uno].present?
+      set_email_hint(requested_account.email, false)
+      @from_picker = true
+      render 'home/login'
+    end
+  end
+
+  def account_picker
+  end
+
   protected
 
   def redirect_to_url

@@ -21,12 +21,15 @@ module ApplicationHelper
     application.redirect_uri.match(regex).captures[0]
   end
 
-  def avatar_tag(size: 200, user: nil, no_margin_top: false, **options)
+  def avatar_tag(size: 200, user: nil, picker: false, no_margin_top: false, **options)
     user ||= current_user
 
-    content_tag :figure, class: "avatar #{'no-margin-top' if no_margin_top}" do
+    content_tag :figure, class: "avatar #{'no-margin-top' if no_margin_top} #{'picker' if picker}" do
       if user.avatar.attached?
-        image_tag(user.avatar.variant(resize_to_limit: [size, size]), **options)
+        image_tag(
+          user.avatar.variant(resize_to_limit: [size, size]),
+          **options,
+        )
       else
         url = "https://api.adorable.io/avatars/#{size}/#{user.username}.png"
         image_tag(url, alt: user.name, size: size, **options)

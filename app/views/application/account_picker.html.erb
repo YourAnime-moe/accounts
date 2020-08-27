@@ -2,22 +2,14 @@
   <div class="hero-body">
     <div class="container has-text-centered">
       <div class="column is-4 is-offset-4">
-        <h3 class="title">Login</h3>
+        <h3 class="title">Select an account...</h3>
         <hr class="login-hr">
 
         <% if current_application %>
           <%= link_to("< Back to #{current_application.name}", current_application.redirect_uri) %>
         <% end %>
 
-        <% if @from_picker %>
-          <%= render partial: 'home/with_hint', locals: { account: requested_account } %>
-        <% else %>
-          <% if account_from_email_hint.present? %>
-            <%= render partial: 'home/with_hint', locals: { account: account_from_email_hint } %>
-          <% else %>
-            <%= render 'home/without_hint' %>
-          <% end %>
-        <% end %>
+        <%= render 'picker_container' %>
 
         <p class="has-text-grey is-hidden">
           <a href="../">Sign Up</a> &nbsp;·&nbsp;

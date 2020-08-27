@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
 
     respond_to do |format|
       format.json do
-        render json: { success: current_user.present?, redirect_to: next_path }, status: 200
+        render json: { success: current_user.present?, redirect_to: next_path }, status: (current_user.present? ? 200 : 401)
       end
     end
   rescue Users::Authenticate::Error => e

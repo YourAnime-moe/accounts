@@ -27,7 +27,6 @@ module AuthenticationHelper
   end
 
   def current_user
-    current_auth_token = session[:auth_token]
     return nil unless current_auth_token.present?
 
     if @current_user.present?
@@ -42,6 +41,22 @@ module AuthenticationHelper
     end
   end
 
+  def requested_account_number
+    return 0 unless params[:uno].present?
+
+    # uno = User Number, defaults to 0 unless valid
+    uno = params[:uno].to_i
+    return uno if session[:user_info].blank?
+
+    uno > session[:user_info].length ? 0 : uno
+  end
+
+  def requested_account
+    return unless params[:uno].present?
+
+    saved_accounts[requested_account_number]
+  end
+
   def logged_in?
     current_user.present?
   end
@@ -51,7 +66,7 @@ module AuthenticationHelper
     raise('This user is invalid') unless user.valid?
 
     user.sessions.create!(expires_on: session_expiry, app_id: app_id)
-    session[:auth_token] = user.auth_token
+    add_account_to_session(user)
     Rails.logger.info "User #{user.name} is now logged in"
   end
 
@@ -73,12 +88,58 @@ module AuthenticationHelper
     redirect_to_current_path_in_mind
   end
 
+  def saved_accounts
+    return [] if session[:saved_accounts].blank? || session[:user_info]
+
+    currently_logged_in_accounts + not_logged_in_accounts
+  end
+
   private
+
+  def currently_logged_in_accounts
+    saved_auth_tokens.map(&:user)
+  end
+
+  def not_logged_in_accounts
+    (session[:saved_accounts] || []).map { |user_id| User.find_by(id: user_id) }.compact
+  end
+
+  def saved_auth_tokens
+    session_user_info.map { |user_info| Users::Session.find_by(token: user_info[:auth_token]) }.compact
+  end
+
+  def session_user_info
+    return [] unless session[:user_info].present?
+
+    session[:user_info].map{ |user_info| user_info.with_indifferent_access }
+  end
+
+  def add_account_to_session(user)
+    if session[:user_info].blank?
+      session[:user_info] = []
+    end
+    session[:user_info].push({
+      uuid: user.uuid,
+      auth_token: user.auth_token,
+    })
+  end
+
+  def current_account_id
+    session[:account_id] ||= requested_account_number
+  end
+
+  def current_auth_token
+    return if session[:user_info].blank?
+
+    token_info = session_user_info[current_account_id] || session_user_info[0]
+    token_info[:auth_token]
+  end
 
   def check_and_set_auth_token(current_auth_token)
     current_session = Users::Session.find_by(token: current_auth_token)
     return nil unless current_session.present?
 
+    # This logic will log everyone out if one session is expired.... not good
     if current_session.expired?
       clean_session
       current_session = nil
@@ -89,7 +150,10 @@ module AuthenticationHelper
   end
 
   def clean_session
+    session[:saved_accounts] = saved_accounts.map(&:id)
+
     session.delete(:auth_token)
+    session.delete(:user_info)
   end
 
   def redirect_to_current_path_in_mind

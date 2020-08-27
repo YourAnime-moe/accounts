@@ -33,8 +33,11 @@
   margin-top: -70px;
   padding-bottom: 20px;
 }
-.avatar.no-margin-top {
+.avatar.no-margin-top, .avatar.picker {
   margin-top: 0;
+}
+.avatar.picker {
+  padding-bottom: 0;
 }
 .avatar img {
   padding: 5px;
@@ -45,6 +48,42 @@
   height: 128px;
   width: 128px;
 }
+.avatar.picker img {
+  padding: 2px;
+  height: 40px;
+  width: 40px;
+}
+
+.picker-card {
+  display: flex;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: -webkit-box;
+
+  -webkit-box-align: center;
+  -ms-box-align: center;
+  align-items: center;
+  margin-top: .5rem;
+}
+
+.picker-content {
+  margin-left: 1.2rem;
+  line-height: 1.2rem;
+  overflow: hidden;
+}
+
+.picker-name {
+  font-size: 1.2rem;
+  font-size: 700;
+}
+
+.picker-email {
+  font-size: .9rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 input {
   font-weight: 300;
 }

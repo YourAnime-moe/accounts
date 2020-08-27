@@ -5,6 +5,8 @@ class HomeController < ApplicationController
     if logged_in?
       set_title(before: 'Your Profile')
       render 'profile'
+    elsif saved_accounts.count > 0
+      render 'application/account_picker'
     else
       set_title(before: 'Login')
       render 'login'
