@@ -39,11 +39,7 @@ module Users
     private
 
     def user
-      @user ||= User.where(
-        username: username.downcase
-      ).or(User.where(
-        email: username.downcase
-      )).first
+      @user ||= Users::Lookup.perform(username_or_email: username)
     end
 
     def check_user_unknown!

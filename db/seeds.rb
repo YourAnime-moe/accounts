@@ -13,10 +13,28 @@ Connext::Application.create!(
   redirect_uri: Rails.configuration.x.hosts[:naka_redirect_uri],
 )
 
+Doorkeeper::Application.create!(
+  name: 'Misete.io',
+  uid: Rails.application.credentials.connext[:naka][:uuid],
+  secret: Rails.application.credentials.connext[:naka][:secret],
+  redirect_uri: Rails.configuration.x.hosts[:naka_redirect_uri] + '/auth/misete/callback',
+  scopes: 'read write email',
+)
+
 RegularUser.create!(
   first_name: 'Developer',
   last_name: 'User',
   email: 'dev@misete.io',
   password: 'password',
   username: 'dev',
+  active: true,
+)
+
+AdminUser.create!(
+  first_name: 'Admin',
+  last_name: 'User',
+  email: 'admin@misete.io',
+  password: 'password',
+  username: 'admin',
+  active: true,
 )

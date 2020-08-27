@@ -5,13 +5,25 @@ module AuthenticationHelper
     @account_from_email_hint ||= User.find_by(email: session[:email_hint])
   end
 
-  def set_email_hint(email)
+  def show_account_hint
+    return unless account_from_email_hint.present?
+
+    session[:show_email] ? session[:email_hint] : account_from_email_hint.username
+  end
+
+  def set_email_hint(email, show_email)
+    session[:show_email] = show_email
     session[:email_hint] = email
   end
 
   def delete_email_hint
     session.delete(:email_hint)
+    session.delete(:show_email)
     @account_from_email_hint = nil
+  end
+
+  def current_resource_owner
+    User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
   end
 
   def current_user
@@ -34,25 +46,13 @@ module AuthenticationHelper
     current_user.present?
   end
 
-  def log_in(user, app_id=nil, session_expiry: 1.week.from_now)
+  def log_in(user, app_id=nil, session_expiry:)
     return if logged_in?
     raise('This user is invalid') unless user.valid?
 
     user.sessions.create!(expires_on: session_expiry, app_id: app_id)
     session[:auth_token] = user.auth_token
     Rails.logger.info "User #{user.name} is now logged in"
-  end
-
-  def log_in_with_app_then_redirect(user, application, session_expiry: 1.week.from_now)
-    log_in(user, application.uuid, session_expiry: session_expiry)
-
-    token = application.tokens.create!(
-      refresh_token: SecureRandom.hex(32),
-      expires_in: 1.week.from_now,
-    )
-    Pathname.new(application.redirect_uri).join(
-      "auth?refresh_token=#{token.refresh_token}&user_id=#{user.uuid}"
-    ).to_s
   end
 
   def log_out
@@ -62,7 +62,12 @@ module AuthenticationHelper
   end
 
   def authenticated!
-    current_user.sessions.create(expires_on: 1.week.from_now) if logged_in? && current_user.auth_token.nil?
+    return unless api_request?
+
+    current_user.sessions.create(
+      expires_on: Rails.configuration.x.access_token_expires_in
+    ) if logged_in? && current_user.auth_token.nil?
+
     return if logged_in?
 
     redirect_to_current_path_in_mind

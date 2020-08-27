@@ -10,7 +10,7 @@
             <% unless account.active? %>
               <i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i>
             <% end %>
-            <span><%= account.email %></span>
+            <span><%= show_account_hint %></span>
           </div>
           <div class="level-right">
             <%= link_to('Change', change_email_path(app_id: current_application&.uuid), method: :post) %>
@@ -47,7 +47,7 @@
       hideNotFound();
       disableBtn();
 
-      let url = `<%= login_path %>`;
+      let url = `<%= login_path(next: params[:next]) %>`;
       fetch(url, {method: 'post', body: formData, headers: {'X-CSRF-Token': csrfToken()}})
         .then(res => {
           res.json().then(result => {

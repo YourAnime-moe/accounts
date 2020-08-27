@@ -6,16 +6,12 @@ class SessionsController < ApplicationController
       username: account_from_email_hint.email,
       password: login_params[:password].strip,
     )
-    go_to = if current_application.present?
-      log_in_with_app_then_redirect(user, current_application)
-    else
-      log_in(user)
-      redirect_to_url
-    end
+    log_in(user, session_expiry: Rails.configuration.x.access_token_expires_in.from_now)
+    next_path = params[:next].present? ? CGI.unescape(params[:next]) : root_path
 
     respond_to do |format|
       format.json do
-        render json: { success: current_user.present?, redirect_to: go_to }, status: 200
+        render json: { success: current_user.present?, redirect_to: next_path }, status: 200
       end
     end
   rescue Users::Authenticate::Error => e

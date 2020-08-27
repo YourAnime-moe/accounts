@@ -15,7 +15,7 @@ module Connext
         raise "Invalid session: #{auth_token}"
       end
 
-      session.correct_application?(application)
+      #session.correct_application?(application)
     end
   end
 end

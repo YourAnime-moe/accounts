@@ -16,6 +16,9 @@
 
 @import "bulma";
 
+.container.restricted {
+  max-width: 964px;
+}
 .hero.is-success {
   background: #F2F6FA;
 }
@@ -29,6 +32,9 @@
 .avatar {
   margin-top: -70px;
   padding-bottom: 20px;
+}
+.avatar.no-margin-top {
+  margin-top: 0;
 }
 .avatar img {
   padding: 5px;

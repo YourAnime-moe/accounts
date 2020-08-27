@@ -63,6 +63,7 @@ end
 Rails.application.configure do
   config.hosts << "misete-accounts.myshopify.io"
   config.hosts << "accounts"
+  config.hosts << "accounts.misete.aki"
 end
 
 Rails.application.configure do
