@@ -28,7 +28,7 @@ module ApplicationHelper
       if user.avatar.attached?
         image_tag(user.avatar.variant(resize_to_limit: [size, size]), **options)
       else
-        url = "https://api.adorable.io/avatars/#{size}/#{user.username}.png"
+        url = "https://api.hello-avatar.com/adorables/#{size}/#{user.username}.png"
         image_tag(url, alt: user.name, size: size, **options)
       end
     end
