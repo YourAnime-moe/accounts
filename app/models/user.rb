@@ -89,7 +89,7 @@ class User < ApplicationRecord
     if avatar.attached?
       avatar.variant(resize_to_limit: [300, 300]).service_url
     else
-      "https://api.adorable.io/avatars/300/#{username}.png"
+      "https://api.hello-avatar.com/adorables/300/#{username}.png"
     end
   end
 
