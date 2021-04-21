@@ -1,9 +1,9 @@
 en:
   app:
-    title: "Misete.io Accounts"
+    title: "YourAnime Accounts"
 
   welcome:
-    title: "Continue to Misete.io"
+    title: "Continue to YourAnime.moe"
     catch-phrase: "Please enter your email address to proceed."
     login:
       username: "Your username"
@@ -13,7 +13,7 @@ en:
       next: "Next"
       errors:
         wrong-password: "We are sorry %{user}, but your password is incorrect."
-        unknown-user: "We are sorry, but no user with username \"%{attempt}\" exists in our system."
+        unknown-user: 'We are sorry, but no user with username "%{attempt}" exists in our system.'
         no-username: "Please enter your username."
         no-password: "Please enter your password."
         no-credentials: "Please enter your username and password."

@@ -4,7 +4,6 @@ module Users
 
     property! :user, accepts: User
     property :email, accepts: String
-    property :username, accepts: String
     property :first_name, accepts: String
     property :last_name, accepts: String
 
@@ -24,7 +23,6 @@ module Users
     def set_attributes
       user.assign_attributes(
         email: email,
-        username: username,
         first_name: first_name,
         last_name: last_name,
       )

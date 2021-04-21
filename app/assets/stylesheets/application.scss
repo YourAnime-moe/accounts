@@ -20,9 +20,10 @@
   max-width: 964px;
 }
 .hero.is-success {
-  background: #F2F6FA;
+  background: #f2f6fa;
 }
-.hero .nav, .hero.is-success .nav {
+.hero .nav,
+.hero.is-success .nav {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
@@ -40,8 +41,9 @@
   padding: 5px;
   background: #fff;
   border-radius: 50%;
-  -webkit-box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
-  box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
+  -webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1),
+    0 0 0 1px rgba(10, 10, 10, 0.1);
+  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
   height: 128px;
   width: 128px;
 }
@@ -55,52 +57,53 @@ p.subtitle {
   padding-top: 1rem;
 }
 
-.login-hr{
+.login-hr {
   border-bottom: 1px solid white;
 }
 
-.has-text-black{
+.has-text-black {
   color: black;
 }
 
-.field{
+.field {
   padding-bottom: 10px;
 }
 
-.fa{
-  margin-left: 5px; 
+.fa {
+  margin-left: 5px;
 }
 
 .level.login {
-  padding: 0 .5rem;
+  padding: 0 0.5rem;
 }
 
-.input, .textarea {
-  background-color: #3F3F3Fa0 !important;
-}
+// .input, .textarea {
+//   background-color: #3F3F3Fa0 !important;
+// }
 
-.textarea::placeholder, .input::placeholder { /* Firefox, Chrome, Opera */
-  color: #b2b2b2 !important;
-}
+// .textarea::placeholder, .input::placeholder { /* Firefox, Chrome, Opera */
+//   color: #b2b2b2 !important;
+// }
 
-.textarea::-ms-input-placeholder, .input::-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: #b2b2b2 !important;
-}
+// .textarea::-ms-input-placeholder, .input::-ms-input-placeholder { /* Internet Explorer 10-11 */
+//   color: #b2b2b2 !important;
+// }
 
-.textarea::-ms-input-placeholder, .input::-ms-input-placeholder { /* Microsoft Edge */
-  color: #b2b2b2 !important;
-}
+// .textarea::-ms-input-placeholder, .input::-ms-input-placeholder { /* Microsoft Edge */
+//   color: #b2b2b2 !important;
+// }
 
-.textarea::hover, .input:hover {
-  background-color: #3F3F3Fc0 !important;
-  transition: 0.3s;
-}
+// .textarea::hover, .input:hover {
+//   background-color: #3F3F3Fc0 !important;
+//   transition: 0.3s;
+// }
 
-.textarea::focus, .input:focus {
-  background-color: #3F3F3F !important;
-}
+// .textarea::focus, .input:focus {
+//   background-color: #3F3F3F !important;
+// }
 
-.no-outline:focus, .no-outline:active {
+.no-outline:focus,
+.no-outline:active {
   outline: none !important;
   box-shadow: none !important;
 }

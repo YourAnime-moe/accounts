@@ -10,10 +10,10 @@
         <div class="columns">
           <div class="column is-6">
             <%= render partial: 'home/action_card', locals: {
-              title: 'Share and view your Nintendo Switch clips',
-              description: 'Want to show off some skills or simply see what other people are made of? Check out Misete.io!',
-              link_text: 'Go to Misete.io',
-              link_path: Rails.configuration.x.hosts[:naka].join('auth/misete').to_s,
+              title: 'The next go-to anime info site',
+              description: 'Find out when your favourite anime airs and where you can watch it. Organize your watch list per streaming platform.',
+              link_text: 'Go to YourAnime.moe',
+              link_path: Rails.configuration.x.hosts[:naka].join('authorize').to_s,
               new_tab: true,
             } %>
           </div>
@@ -29,8 +29,8 @@
         <div class="columns">
           <div class="column is-6">
             <%= render partial: 'home/action_card', locals: {
-              title: 'Your sessions',
-              description: 'Your will be asked for your permission to use your account details upon logging in. See all sessions here.',
+              title: 'Authorized applications',
+              description: 'You will be asked for your permission to use your account details upon logging in. See all apps here.',
               link_text: 'View authorized apps',
               link_path: oauth_authorized_applications_path,
             } %>
@@ -38,7 +38,7 @@
           <div class="column is-6">
             <%= render partial: 'home/action_card', locals: {
               title: 'Logout',
-              description: 'This will end all active sessions on Misete.io. This means that all accounts will be disconnected on this computer.',
+              description: 'For your security, we will automatically end your session on this site every 2 hours.',
               link_text: 'Logout',
               link_path: logout_path,
               link_method: :delete,
