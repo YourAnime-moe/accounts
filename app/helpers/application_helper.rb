@@ -3,6 +3,10 @@ module ApplicationHelper
     content_tag(:div, content, class: "notification is-#{type}")
   end
 
+  def peek_enabled?
+    logged_in? && current_user.admin?
+  end
+
   def app_title
     @app_title
   end

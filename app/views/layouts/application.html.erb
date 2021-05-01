@@ -15,6 +15,7 @@
     <% flash.each do |key, value| %>
       <%= show_notification(key, value) %>
     <% end %>
+    <%= render 'peek/bar' %>
     <%= yield %>
   </body>
 

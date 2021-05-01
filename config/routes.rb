@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   use_doorkeeper
+  mount Peek::Railtie => '/peek'
+
   root 'home#index'
   post '/lookup' => 'home#lookup'
   get '/signup' => 'application#new_account'
