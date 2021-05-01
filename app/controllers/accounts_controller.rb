@@ -1,4 +1,5 @@
 class AccountsController < ApplicationController
+  before_action :authenticated!, unless: :api_request?
   before_action :doorkeeper_authorize!, if: :api_request?
 
   def index

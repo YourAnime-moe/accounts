@@ -62,7 +62,7 @@ module AuthenticationHelper
   end
 
   def authenticated!
-    return unless api_request?
+    return if api_request?
 
     current_user.sessions.create(
       expires_on: Rails.configuration.x.access_token_expires_in

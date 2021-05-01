@@ -51,9 +51,9 @@
             </div>
           </div>
 
-
+          <% current_app = Doorkeeper::Application.find_by(uid: params[:client_id]) %>
           <div class="notification is-text-small" style="margin-top">
-            <small>You will redirected to: <br/><u><%= @pre_auth.redirect_uri %></u></small>
+            <small>You will be redirected to: <br/><u><%= domain_for_app(current_app) %></u></small>
           </div>
         </div>
       </div>
