@@ -17,8 +17,12 @@ module ApplicationHelper
   def domain_for_app(application)
     return unless application.redirect_uri.present?
 
+    domain_for_uri(application.redirect_uri)
+  end
+
+  def domain_for_uri(uri)
     regex = %r{([\w\:\/\\.]+)(\/auth\/misete\/callback)\/?}
-    application.redirect_uri.match(regex).captures[0]
+    uri.match(regex)&.captures[0] || uri
   end
 
   def avatar_tag(size: 200, user: nil, no_margin_top: false, **options)

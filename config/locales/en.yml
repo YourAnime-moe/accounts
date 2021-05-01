@@ -19,3 +19,21 @@ en:
         no-credentials: "Please enter your username and password."
         deactivated: "Your account has been deactivated because it has been reported to the moderators."
         maintenance: "We are sorry but our servers are current in maintenance. Please try again later."
+
+  doorkeeper:
+    authorizations:
+      buttons:
+        authorize: Looks good to me!
+        deny: No, thank you.
+    scopes:
+      title:
+        write: Edit your profile info
+        profile: Read your profile info
+        email: Use your email address
+      description:
+        write: Your profile information will be editable directly on the app you're using.
+        profile: |
+          This includes: first and last names, username, profile picture and email address.
+          We'll make sure they don't spam your email address. This application will NOT
+          be able to edit your profile information.
+        email: This is needed for receiving necessary information about this app. No spamming.

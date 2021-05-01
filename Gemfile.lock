@@ -95,7 +95,7 @@ GEM
     bootsnap (1.4.6)
       msgpack (~> 1.0)
     builder (3.2.4)
-    bulma-rails (0.8.0)
+    bulma-rails (0.9.1)
       sassc (~> 2.0)
     byebug (11.1.2)
     capybara (3.32.1)
@@ -247,7 +247,7 @@ DEPENDENCIES
   active_operation
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.2)
-  bulma-rails (~> 0.8.0)
+  bulma-rails (~> 0.9)
   byebug
   capybara (>= 2.15)
   doorkeeper

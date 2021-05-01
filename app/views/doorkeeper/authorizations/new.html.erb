@@ -1,30 +1,43 @@
 <section class="hero is-fullheight">
   <div class="hero-body">
-    <div class="container has-text-centered">
+    <div class="container">
       <div class="column is-4 is-offset-4">
-        <h3 class="title"><%= t('.title') %></h3>
-        <%= link_to("Cancel this authorization request", oauth_cancel_path) %>
+        <div class="has-text-centered">
+          <h3 class="title"><%= t('.title') %></h3>
+          <%= link_to("Cancel this authorization request", oauth_cancel_path) %>
+        </div>
         <div class="box">
+          <div class="has-text-centered">
           <%= avatar_tag(user: current_user, size: 128) %>
           <small>
             <p style="margin: 10px; font-weight: 300">
-              <b><%= current_user.name %></b> (<%= current_user.email %>), by clicking "Authorize" below, you accept that:
+              <b><%= current_user.name %></b> (<%= current_user.email %>), by clicking "<%= t('doorkeeper.authorizations.buttons.authorize') %>" below, you accept that:
             </p>
           </small>
+          </div>
 
           <% if @pre_auth.scopes.count > 0 %>
             <div id="oauth-permissions">
-              <%= t('.able_to') %>:</p>
+              <span><%= t('.able_to') %>:</span>
 
-              <div class="container" style="padding: 20px">
+              <small class="content">
+                <ul style="margin-top: .5rem">
                 <% @pre_auth.scopes.each do |scope| %>
-                  <span class="tag"><%= t scope, scope: [:doorkeeper, :scopes] %></span>
+                  <li>
+                    <u>
+                      <%= t scope, scope: [:doorkeeper, :scopes, :title] %>
+                    </u> -
+                    <span style="font-weight: 300">
+                      <%= t scope, scope: [:doorkeeper, :scopes, :description] %>
+                    </span>
+                  </li>
                 <% end %>
-              </div>
+                </ul>
+              </small>
             </div>
           <% end %>
           
-          <div class="columns">
+          <div class="columns" style="padding-top: 20px">
             <div class="column is-6 is-desktop">
               <%= form_tag oauth_authorization_path, method: :post do %>
                 <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
@@ -51,9 +64,9 @@
             </div>
           </div>
 
-          <% current_app = Doorkeeper::Application.find_by(uid: params[:client_id]) %>
-          <div class="notification is-text-small" style="margin-top">
-            <small>You will be redirected to: <br/><u><%= domain_for_app(current_app) %></u></small>
+
+          <div class="notification is-text-small has-text-centered" style="margin-top">
+            <small>You will be redirected to: <br/><u><%= domain_for_uri(@pre_auth.redirect_uri) %></u></small>
           </div>
         </div>
       </div>
