@@ -91,6 +91,8 @@ class User < ApplicationRecord
     else
       "https://api.hello-avatar.com/adorables/300/#{username}.png"
     end
+  rescue
+    "https://api.hello-avatar.com/adorables/300/#{username}.png"
   end
 
   def self.make(type, *args, **kwargs)

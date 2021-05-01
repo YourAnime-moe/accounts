@@ -6,6 +6,7 @@ module Users
     property :email, accepts: String
     property :first_name, accepts: String
     property :last_name, accepts: String
+    property :avatar
 
     def execute
       update_user
@@ -25,6 +26,7 @@ module Users
         email: email,
         first_name: first_name,
         last_name: last_name,
+        avatar: avatar,
       )
     end
 

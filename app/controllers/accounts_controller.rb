@@ -1,4 +1,6 @@
 class AccountsController < ApplicationController
+  include ActiveStorage::SetCurrent
+
   before_action :authenticated!, unless: :api_request?
   before_action :doorkeeper_authorize!, if: :api_request?
 
@@ -33,6 +35,7 @@ class AccountsController < ApplicationController
       :email,
       :first_name,
       :last_name,
+      :avatar,
     ).to_h.symbolize_keys
   end
 end
