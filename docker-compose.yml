@@ -23,7 +23,8 @@ services:
     ports:
       - "81:3000"
     environment:
-      - RAILS_MASTER_KEY=e241d955d156d9f5c647f6d49800a199
+      BUNDLE_PATH: /gems
+      RAILS_MASTER_KEY: e241d955d156d9f5c647f6d49800a199
 
 volumes:
   db:

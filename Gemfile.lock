@@ -124,6 +124,13 @@ GEM
       xpath (~> 3.2)
     childprocess (3.0.0)
     coderay (1.1.2)
+    coffee-rails (5.0.0)
+      coffee-script (>= 2.2.0)
+      railties (>= 5.2.0)
+    coffee-script (2.4.1)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.12.2)
     concurrent-ruby (1.1.6)
     crass (1.0.6)
     doorkeeper (5.4.0)
@@ -133,6 +140,7 @@ GEM
       dotenv (= 2.7.5)
       railties (>= 3.2, < 6.1)
     erubi (1.9.0)
+    execjs (2.8.1)
     factory_bot (5.1.1)
       activesupport (>= 4.2.0)
     factory_bot_rails (5.1.1)
@@ -266,6 +274,7 @@ DEPENDENCIES
   bulma-rails (~> 0.9)
   byebug
   capybara (>= 2.15)
+  coffee-rails
   doorkeeper
   dotenv-rails
   factory_bot_rails
