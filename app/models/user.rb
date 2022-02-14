@@ -89,10 +89,10 @@ class User < ApplicationRecord
     if avatar.attached?
       avatar.variant(resize_to_limit: [300, 300]).service_url
     else
-      "https://api.hello-avatar.com/adorables/300/#{username}.png"
+      "https://www.gravatar.com/avatar/#{email_hash}.jpg?s=300"
     end
   rescue
-    "https://api.hello-avatar.com/adorables/300/#{username}.png"
+    "https://www.gravatar.com/avatar/#{email_hash}.jpg?s=300"
   end
 
   def self.make(type, *args, **kwargs)
@@ -106,6 +106,10 @@ class User < ApplicationRecord
   end
 
   private
+
+  def email_hash
+    OpenSSL::Digest::MD5.new(email).to_s if email.present?
+  end
 
   def ensure_uuid
     self[:uuid] = SecureRandom.uuid unless self.persisted?
