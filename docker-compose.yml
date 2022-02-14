@@ -1,0 +1,31 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: misete
+      POSTGRES_PASSWORD: isthizatheway
+
+  web:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - gems:/gems
+      - tmp:/tmp
+    depends_on:
+      - db
+    ports:
+      - "81:3000"
+    environment:
+      - RAILS_MASTER_KEY=e241d955d156d9f5c647f6d49800a199
+
+volumes:
+  db:
+  gems:
+  tmp:
