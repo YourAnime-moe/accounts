@@ -44,6 +44,8 @@ gem 'peek-git'
 
 gem 'psych', '< 4'
 
+gem 'aws-sdk-s3'
+
 # RestClient
 gem "rest-client", "~> 2.1"
 
