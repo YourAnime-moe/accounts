@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.3'
+ruby '3.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '6.1'
@@ -41,6 +41,8 @@ gem 'doorkeeper'
 # Peek
 gem 'peek'
 gem 'peek-git'
+
+gem 'psych', '< 4'
 
 # RestClient
 gem "rest-client", "~> 2.1"
