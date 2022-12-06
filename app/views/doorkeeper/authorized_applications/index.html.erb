@@ -24,6 +24,42 @@
         </small>
       </div>
 
+      <% unless current_user.linked_to?('discord') %>
+        <div class="columns">
+          <div class="column is-4">
+            <%= render partial: 'home/action_card', locals: {
+              title: 'Link Discord account',
+              description: 'You will be redirected to Discord\'s website.',
+              link_text: 'Link',
+              link_path: external_grant_discord_authorize_path,
+            } %>
+          </div>
+        </div>
+      <% end %>
+
+      <% if current_user.external_oauth_grants.any? %>
+        <table class="table is-fullwidth is-striped is-hoverable">
+          <thead>
+            <th>Application name</th>
+            <th>When did you authorize this app?</th>
+            <th>Action</th>
+          </thead>
+          <tbody>
+            <% current_user.external_oauth_grants.each do |external_oauth_grant| %>
+              <tr>
+                <td><%= external_oauth_grant.grant_name %></td>
+                <td title="<%= external_oauth_grant.created_at.strftime(t('doorkeeper.authorized_applications.index.date_format')) %>">
+                  <%= time_ago_in_words(external_oauth_grant.created_at) %> ago
+                </td>
+                <td>
+                  <%= link_to("Revoke", revoke_discord_grant_path(external_oauth_grant.id), method: :delete) %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+
       <% unless @applications.blank? %>
         <table class="table is-fullwidth is-striped is-hoverable">
           <thead>

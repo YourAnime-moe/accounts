@@ -3,6 +3,7 @@ class User < ApplicationRecord
   before_validation :ensure_color_hex
 
   has_secure_password
+  has_many :external_oauth_grants, -> { active }
 
   with_options presence: true do
     with_options uniqueness: { case_sensitive: true } do
@@ -40,6 +41,7 @@ class User < ApplicationRecord
       color_hex: color_hex,
       active: active,
       blocked: blocked,
+      external_oauth_grants: external_oauth_grants,
     }
   end
 
@@ -93,6 +95,10 @@ class User < ApplicationRecord
     end
   rescue
     "https://www.gravatar.com/avatar/#{email_hash}.jpg?s=300"
+  end
+
+  def linked_to?(grant_name)
+    grant_name.present? && external_oauth_grants.where(grant_name: grant_name).any?
   end
 
   def self.make(type, *args, **kwargs)

@@ -1,8 +1,9 @@
-FROM ruby:2.6.3
+FROM ruby:3.1.2
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update -qq && apt-get install -y yarn nodejs postgresql-client
-RUN gem install bundler:2.0.2
+RUN apt-get update -qq && apt-get install -y yarn nodejs
+RUN apt-get install -y postgresql-client
+RUN gem install bundler:2.3.7
 RUN mkdir -p /app
 WORKDIR /app
 COPY Gemfile /app/Gemfile
