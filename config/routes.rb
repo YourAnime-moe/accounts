@@ -11,6 +11,10 @@ Rails.application.routes.draw do
   delete '/logout' => 'sessions#delete'
   post '/change_email' => 'home#remove_email_hint'
 
+  get '/external/grant/discord/authorize' => 'external_grants/discord#new'
+  match '/external/grant/discord/callback' => 'external_grants/discord#create', via: [:get, :post]
+  delete '/external/grant/discord/:id/revoke' => 'external_grants/discord#delete', as: :revoke_discord_grant
+
   get '/oauth/cancel' => 'application#cancel_oauth_request'
 
   scope :me do

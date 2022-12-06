@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_23_023018) do
+ActiveRecord::Schema.define(version: 2022_12_06_140119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,21 @@ ActiveRecord::Schema.define(version: 2020_08_23_023018) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["uuid"], name: "index_connext_applications_on_uuid", unique: true
+  end
+
+  create_table "external_oauth_grants", force: :cascade do |t|
+    t.string "grant_name"
+    t.string "grant_user_id"
+    t.string "grant_type"
+    t.string "access_token"
+    t.string "refresh_token"
+    t.string "scope"
+    t.datetime "expires_on"
+    t.boolean "is_not_deleted", default: true, null: false
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_external_oauth_grants_on_user_id"
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
