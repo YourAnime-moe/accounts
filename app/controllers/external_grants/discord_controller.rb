@@ -67,30 +67,7 @@ module ExternalGrants
     def delete
       external_oauth_grant = ExternalOauthGrant.where(user: current_user).find_by(id: params[:id])
       if external_oauth_grant
-        uri = URI::HTTPS.build(
-          host: 'discord.com',
-          path: '/api/oauth2/token/revoke',
-        )
-
-        payload = {
-          token: external_oauth_grant.refresh_token,
-          token_type_hint: "refresh_token",
-          client_id: credentials[:client_id],
-          client_secret: credentials[:client_secret],
-        }
-
-        response = RestClient.post(
-          uri.to_s,
-          payload,
-          {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Authorization": "Bearer #{external_oauth_grant.access_token}"
-          }
-        )
-
-        puts(JSON.parse(response))
-
-        external_oauth_grant.update(is_not_deleted: false, access_token: nil, refresh_token: nil)
+        external_oauth_grant.revoke!
       end
 
       redirect_to(oauth_authorized_applications_path)

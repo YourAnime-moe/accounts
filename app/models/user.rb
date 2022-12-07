@@ -111,6 +111,13 @@ class User < ApplicationRecord
     result
   end
 
+  def self.find_by_grant(grant_name, grant_user_id)
+    grant = ExternalOauthGrant.active.find_by(grant_name: grant_name, grant_user_id: grant_user_id)
+    return unless grant.present?
+
+    grant.refresh_if_necessary!.user
+  end
+
   private
 
   def email_hash

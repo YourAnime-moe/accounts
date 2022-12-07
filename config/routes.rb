@@ -20,7 +20,9 @@ Rails.application.routes.draw do
   scope :me do
     get '/', to: 'accounts#index', as: :my_account
     patch '/', to: 'accounts#update'
+
   end
+  get '/check/links', to: 'users#check_links'
 
   # namespace :connext do
   #   post "/graphql", to: "graphql#execute"
